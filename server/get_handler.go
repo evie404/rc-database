@@ -3,12 +3,10 @@ package server
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/rickypai/rc-database/database"
 )
 
 type getHandler struct {
-	database *database.Database
+	database DataReaderWriter
 }
 
 func (h *getHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

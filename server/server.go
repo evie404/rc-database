@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/rickypai/rc-database/database"
 )
 
+type DataReaderWriter interface {
+	Get(key string) ([]byte, error)
+	Set(key string, value []byte) error
+}
 type DatabaseServer struct {
 	mux *http.ServeMux
 }
 
-func NewDatabaseServer(db *database.Database) *DatabaseServer {
+func NewDatabaseServer(db DataReaderWriter) *DatabaseServer {
 	mux := http.NewServeMux()
 	mux.Handle("/get", &getHandler{db})
 	mux.Handle("/set", &setHandler{db})
