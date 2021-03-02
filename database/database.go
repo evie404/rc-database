@@ -3,6 +3,7 @@ package database
 import "sync"
 
 type Database struct {
+	// TODO: support on-disk persistence
 	data  map[string][]byte
 	mutex sync.Mutex
 }
