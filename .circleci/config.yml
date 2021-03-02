@@ -1,0 +1,27 @@
+version: 2.1
+jobs:
+  "Go build":
+    docker:
+      - image: circleci/golang:1.16.0
+    resource_class: small
+    working_directory: /go/src/github.com/{{ORG_NAME}}/{{REPO_NAME}}
+    steps:
+      - run: pwd
+      - checkout
+      - restore_cache: # restores saved cache if no changes are detected since last run
+          keys:
+            - go-mod-{{ checksum "go.sum" }}
+            - go-mod
+      - run:
+          command: go build -v ./...
+      - run:
+          command: go test -v ./...
+      - save_cache:
+          key: go-mod-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
+workflows:
+  go:
+    jobs:
+      - "Go build"
