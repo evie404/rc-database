@@ -9,6 +9,7 @@ Write a program that runs a server that is accessible on http://localhost:4000/.
 - Database, server that supports Get/Set
 - Client that interfaces with the server
 - Supports concurrent access
+- Unit tests and integration tests
 
 ## TODO
 
