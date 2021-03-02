@@ -51,8 +51,9 @@ func TestConcurrentGetSet(db DataReaderWriter, times int, t *testing.T) {
 
 	// seed with some random data and make sure they are accessible right after we write them
 	for i := 0; i < times; i++ {
+		setWG.Add(1)
+
 		go func(i int) {
-			setWG.Add(1)
 			defer setWG.Done()
 
 			// prefix with index to prevent the rare case of collision
@@ -78,8 +79,9 @@ func TestConcurrentGetSet(db DataReaderWriter, times int, t *testing.T) {
 
 	// make sure individual keys are still accessible after we finish writing all data
 	for key, value := range testKeyValues {
+		getWG.Add(1)
+
 		go func(key string, value []byte) {
-			getWG.Add(1)
 			defer getWG.Done()
 
 			gotValue, err := db.Get(key)
