@@ -42,6 +42,8 @@ func TestGetSet(db DataReaderWriter, times int, t *testing.T) {
 }
 
 func TestConcurrentGetSet(db DataReaderWriter, times int, t *testing.T) {
+	// TODO: customize concurrency
+
 	testKeyValues := map[string][]byte{}
 	mutex := sync.Mutex{}
 
