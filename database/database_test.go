@@ -11,3 +11,9 @@ func TestDatabase_GetSet(t *testing.T) {
 
 	testhelpers.TestGetSet(db, 1000, t)
 }
+
+func TestDatabase_ConcurrentGetSet(t *testing.T) {
+	db := NewDatabase()
+
+	testhelpers.TestConcurrentGetSet(db, 1000, t)
+}
