@@ -1,6 +1,7 @@
 package client
 
 import (
+	"os"
 	"testing"
 	"time"
 
@@ -11,7 +12,11 @@ import (
 )
 
 func TestClient_GetSet(t *testing.T) {
-	db := database.NewDatabase()
+	db, err := database.NewDatabase("/tmp/test.json")
+	require.NoError(t, err)
+
+	defer os.Remove("/tmp/test.json")
+
 	srv := server.NewDatabaseServer(db)
 	port, err := testhelpers.GetUnusedPort()
 	require.NoError(t, err)
@@ -32,7 +37,11 @@ func TestClient_GetSet(t *testing.T) {
 }
 
 func TestClient_ConcurrentGetSet(t *testing.T) {
-	db := database.NewDatabase()
+	db, err := database.NewDatabase("/tmp/test.json")
+	require.NoError(t, err)
+
+	defer os.Remove("/tmp/test.json")
+
 	srv := server.NewDatabaseServer(db)
 	port, err := testhelpers.GetUnusedPort()
 	require.NoError(t, err)

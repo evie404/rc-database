@@ -8,9 +8,14 @@ import (
 )
 
 func main() {
-	srv := server.NewDatabaseServer(database.NewDatabase())
+	filepath := "/tmp/db.json"
+	db, err := database.NewDatabase(filepath)
+	if err != nil {
+		log.Panicf("opening database: %s", err)
+	}
+	srv := server.NewDatabaseServer(db)
 
-	err := srv.Listen(4000)
+	err = srv.Listen(4000)
 	if err != nil {
 		log.Panicf("starting http server: %s", err)
 	}
