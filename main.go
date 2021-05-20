@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
+	"github.com/rickypai/rc-database/api/http/server"
 	"github.com/rickypai/rc-database/database/jsonfile"
-	"github.com/rickypai/rc-database/server"
 )
 
 func main() {

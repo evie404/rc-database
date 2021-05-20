@@ -4,8 +4,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/rickypai/rc-database/api/http/server"
 	"github.com/rickypai/rc-database/database/memmapmutex"
-	"github.com/rickypai/rc-database/server"
 	"github.com/rickypai/rc-database/testhelpers"
 	"github.com/stretchr/testify/require"
 )

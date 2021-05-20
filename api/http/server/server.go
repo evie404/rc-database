@@ -6,10 +6,19 @@ import (
 	"net/http"
 )
 
-type DataReaderWriter interface {
+type DataReader interface {
 	Get(key string) ([]byte, error)
+}
+
+type DataWriter interface {
 	Set(key string, value []byte) error
 }
+
+type DataReaderWriter interface {
+	DataReader
+	DataWriter
+}
+
 type DatabaseServer struct {
 	mux *http.ServeMux
 }

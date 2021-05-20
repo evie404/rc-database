@@ -6,7 +6,7 @@ import (
 )
 
 type setHandler struct {
-	database DataReaderWriter
+	database DataWriter
 }
 
 func (h *setHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
