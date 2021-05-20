@@ -28,6 +28,15 @@ func TestJSONFileDatabase_ConcurrentGetSet(t *testing.T) {
 	testhelpers.TestConcurrentGetSet(db, 1000, t)
 }
 
+func TestJSONFileDatabase_SetMultipleVersions(t *testing.T) {
+	db, err := NewJSONFileDatabase("/tmp/test.json")
+	require.NoError(t, err)
+
+	defer os.Remove("/tmp/test.json")
+
+	testhelpers.TestSetMultipleVersions(db, 1000, t)
+}
+
 func TestJSONFileDatabase_FilePersistence(t *testing.T) {
 	db, err := NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)

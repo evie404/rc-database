@@ -20,3 +20,9 @@ func TestMemoryMapDatabase_ConcurrentGetSet(t *testing.T) {
 
 	testhelpers.TestConcurrentGetSet(db, 1000, t)
 }
+
+func TestMemoryMapDatabase_SetMultipleVersions(t *testing.T) {
+	db := NewMemoryMapDatabase()
+
+	testhelpers.TestSetMultipleVersions(db, 1000, t)
+}
