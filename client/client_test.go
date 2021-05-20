@@ -5,14 +5,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/rickypai/rc-database/database"
+	"github.com/rickypai/rc-database/database/jsonfile"
 	"github.com/rickypai/rc-database/server"
 	"github.com/rickypai/rc-database/testhelpers"
 	"github.com/stretchr/testify/require"
 )
 
 func TestClient_GetSet(t *testing.T) {
-	db, err := database.NewDatabase("/tmp/test.json")
+	db, err := jsonfile.NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	defer os.Remove("/tmp/test.json")
@@ -37,7 +37,7 @@ func TestClient_GetSet(t *testing.T) {
 }
 
 func TestClient_ConcurrentGetSet(t *testing.T) {
-	db, err := database.NewDatabase("/tmp/test.json")
+	db, err := jsonfile.NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	defer os.Remove("/tmp/test.json")

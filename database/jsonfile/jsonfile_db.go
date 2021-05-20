@@ -1,4 +1,4 @@
-package database
+package jsonfile
 
 import (
 	"encoding/json"
@@ -8,14 +8,14 @@ import (
 	"sync"
 )
 
-type Database struct {
+type JSONFileDatabase struct {
 	data  map[string][]byte
 	mutex sync.Mutex
 
 	filePath string
 }
 
-func NewDatabase(filePath string) (*Database, error) {
+func NewJSONFileDatabase(filePath string) (*JSONFileDatabase, error) {
 	var file *os.File
 	var err error
 
@@ -41,13 +41,13 @@ func NewDatabase(filePath string) (*Database, error) {
 		}
 	}
 
-	return &Database{
+	return &JSONFileDatabase{
 		data:     data,
 		filePath: filePath,
 	}, nil
 }
 
-func (db *Database) Get(key string) ([]byte, error) {
+func (db *JSONFileDatabase) Get(key string) ([]byte, error) {
 	db.mutex.Lock()
 	defer db.mutex.Unlock()
 
@@ -58,7 +58,7 @@ func (db *Database) Get(key string) ([]byte, error) {
 	return nil, nil
 }
 
-func (db *Database) Set(key string, value []byte) error {
+func (db *JSONFileDatabase) Set(key string, value []byte) error {
 	db.mutex.Lock()
 
 	db.data[key] = value

@@ -3,13 +3,13 @@ package main
 import (
 	"log"
 
-	"github.com/rickypai/rc-database/database"
+	"github.com/rickypai/rc-database/database/jsonfile"
 	"github.com/rickypai/rc-database/server"
 )
 
 func main() {
 	filepath := "/tmp/db.json"
-	db, err := database.NewDatabase(filepath)
+	db, err := jsonfile.NewJSONFileDatabase(filepath)
 	if err != nil {
 		log.Panicf("opening database: %s", err)
 	}

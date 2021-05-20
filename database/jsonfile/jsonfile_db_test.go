@@ -1,4 +1,4 @@
-package database
+package jsonfile
 
 import (
 	"fmt"
@@ -10,8 +10,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestDatabase_GetSet(t *testing.T) {
-	db, err := NewDatabase("/tmp/test.json")
+func TestJSONFileDatabase_GetSet(t *testing.T) {
+	db, err := NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	defer os.Remove("/tmp/test.json")
@@ -19,8 +19,8 @@ func TestDatabase_GetSet(t *testing.T) {
 	testhelpers.TestGetSet(db, 1000, t)
 }
 
-func TestDatabase_ConcurrentGetSet(t *testing.T) {
-	db, err := NewDatabase("/tmp/test.json")
+func TestJSONFileDatabase_ConcurrentGetSet(t *testing.T) {
+	db, err := NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	defer os.Remove("/tmp/test.json")
@@ -28,8 +28,8 @@ func TestDatabase_ConcurrentGetSet(t *testing.T) {
 	testhelpers.TestConcurrentGetSet(db, 1000, t)
 }
 
-func TestDatabase_FilePersistence(t *testing.T) {
-	db, err := NewDatabase("/tmp/test.json")
+func TestJSONFileDatabase_FilePersistence(t *testing.T) {
+	db, err := NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	defer os.Remove("/tmp/test.json")
@@ -57,7 +57,7 @@ func TestDatabase_FilePersistence(t *testing.T) {
 	// TODO: properly close the database
 
 	// create a new instance of the database
-	db1, err := NewDatabase("/tmp/test.json")
+	db1, err := NewJSONFileDatabase("/tmp/test.json")
 	require.NoError(t, err)
 
 	// make sure individual keys are still accessible after we finish writing all data
