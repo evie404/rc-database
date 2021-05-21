@@ -64,6 +64,35 @@ func TestSetMultipleVersions(db DataReaderWriter, times int, t *testing.T) {
 	require.Equal(t, values[len(values)-1], gotValue)
 }
 
+func TestConcurrentSetRace(db DataReaderWriter, times int, t *testing.T) {
+	key := RandAlphanumericString(rand.Intn(100) + 1)
+	values := make([][]byte, times)
+
+	for i := 0; i < times; i++ {
+		values[i] = RandAlphanumericBytes(rand.Intn(100) + 1)
+	}
+
+	// start race of a lot of sets
+	wg := sync.WaitGroup{}
+
+	for _, value := range values {
+		wg.Add(1)
+
+		go func(key string, value []byte) {
+			err := db.Set(key, value)
+			require.NoError(t, err)
+			wg.Done()
+		}(key, value)
+	}
+
+	wg.Wait()
+
+	// assert that one of the the set requests won
+	gotValue, err := db.Get(key)
+	require.NoError(t, err)
+	require.Contains(t, values, gotValue)
+}
+
 func TestConcurrentGetSet(db DataReaderWriter, times int, t *testing.T) {
 	// TODO: customize concurrency
 

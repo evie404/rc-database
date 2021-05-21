@@ -23,3 +23,9 @@ func TestMemoryMapRWMutexDatabase_SetMultipleVersions(t *testing.T) {
 
 	testhelpers.TestSetMultipleVersions(db, 1000, t)
 }
+
+func TestMemoryMapRWMutexDatabase_ConcurrentSetRace(t *testing.T) {
+	db := NewMemoryMapRWMutexDatabase()
+
+	testhelpers.TestConcurrentSetRace(db, 1000, t)
+}
